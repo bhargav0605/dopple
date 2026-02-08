@@ -1,0 +1,38 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-go@v5
+        with:
+          go-version: '1.21'
+
+      - name: Build binaries
+        run: |
+          GOOS=linux GOARCH=amd64 go build -o doppel-linux-amd64
+          GOOS=linux GOARCH=arm64 go build -o doppel-linux-arm64
+          GOOS=darwin GOARCH=amd64 go build -o doppel-darwin-amd64
+          GOOS=darwin GOARCH=arm64 go build -o doppel-darwin-arm64
+          GOOS=windows GOARCH=amd64 go build -o doppel-windows-amd64.exe
+
+      - name: Create Release
+        uses: softprops/action-gh-release@v1
+        with:
+          files: |
+            doppel-linux-amd64
+            doppel-linux-arm64
+            doppel-darwin-amd64
+            doppel-darwin-arm64
+            doppel-windows-amd64.exe
+          generate_release_notes: true
