@@ -1,0 +1,11 @@
+{
+  "severity": "medium",
+  "confidence": "medium",
+  "exclude": [],
+  "tests": false,
+  "exclude-generated": true,
+  "exclude-dirs": [
+    "vendor"
+  ],
+  "concurrency": 4
+}

@@ -9,6 +9,23 @@ doppel-*
 # Test binaries
 *.test
 
+# Security reports
+security-report.md
+govulncheck-report.json
+govulncheck-output.json
+gosec-report.json
+gosec-report.sarif
+gosec-output.json
+checksums.txt
+deps-table.txt
+release-notes.md
+
+# Version check cache
+.doppel-version-cache.json
+
+# Backup binaries
+*.backup
+
 # Output of the go coverage tool
 *.out
 

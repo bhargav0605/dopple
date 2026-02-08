@@ -6,17 +6,41 @@ import (
 	"encoding/hex"
 	"io"
 	"os"
+
+	"github.com/corona10/goimagehash"
 )
 
 type HashedFile struct {
-	FileInfo scanner.FileInfo
-	Hash     string
+	FileInfo   scanner.FileInfo
+	Hash       string
+	PHash      *goimagehash.ImageHash
+	IsImage    bool
+	Similarity int
 }
 
-func HashFiles(files []scanner.FileInfo) []HashedFile {
-	sizeGroups := groupBySize(files)
+func HashFiles(files []scanner.FileInfo, exact bool) []HashedFile {
+	var images, nonImages []scanner.FileInfo
+	for _, file := range files {
+		if !exact && isImage(file.Path) {
+			images = append(images, file)
+		} else {
+			nonImages = append(nonImages, file)
+		}
+	}
+
 	var hashed []HashedFile
 
+	for _, file := range images {
+		if phash, err := perceptualHashImage(file.Path); err == nil {
+			hashed = append(hashed, HashedFile{
+				FileInfo: file,
+				PHash:    phash,
+				IsImage:  true,
+			})
+		}
+	}
+
+	sizeGroups := groupBySize(nonImages)
 	for _, group := range sizeGroups {
 		if len(group) < 2 {
 			continue
@@ -27,6 +51,7 @@ func HashFiles(files []scanner.FileInfo) []HashedFile {
 				hashed = append(hashed, HashedFile{
 					FileInfo: file,
 					Hash:     hash,
+					IsImage:  false,
 				})
 			}
 		}
