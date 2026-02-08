@@ -4,23 +4,50 @@ Fast CLI tool to find and remove duplicate files using SHA-256 hashing. Works ev
 
 ## Install
 
-**Download Binary:**
+### Option 1: Download Pre-built Binary (Recommended)
 
 Download the latest release for your platform from [releases](https://github.com/yourusername/doppel/releases).
 
-**Install with Go:**
+**Linux/macOS:**
+```bash
+# Download the binary for your platform
+wget https://github.com/yourusername/doppel/releases/download/v1.0.0/doppel-linux-amd64
+# or for macOS: doppel-darwin-amd64 / doppel-darwin-arm64
+
+# Rename and make executable
+mv doppel-* doppel
+chmod +x doppel
+
+# Install to system (makes it available from anywhere)
+./install.sh
+```
+
+**Windows:**
+```powershell
+# Download doppel-windows-amd64.exe from releases
+# Rename to doppel.exe
+# Run installer
+.\install.ps1
+```
+
+### Option 2: Install with Go
 
 ```bash
 go install github.com/yourusername/doppel@latest
 ```
 
-**Build from source:**
+### Option 3: Build from Source
 
 ```bash
 git clone https://github.com/yourusername/doppel.git
 cd doppel
-go build
+go build -o doppel
+
+# Install to system (optional)
+./install.sh
 ```
+
+After installation, `doppel` will be available from anywhere in your terminal.
 
 ## Usage
 
