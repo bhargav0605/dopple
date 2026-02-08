@@ -53,10 +53,13 @@ jobs:
         with:
           go-version: '1.25'
 
+      - name: Install gosec
+        run: go install github.com/securego/gosec/v2/cmd/gosec@latest
+
       - name: Run Gosec Security Scanner
-        uses: securego/gosec@master
-        with:
-          args: -conf .gosec.json -fmt sarif -out gosec-report.sarif ./...
+        run: |
+          gosec -conf .gosec.json -fmt sarif -out gosec-report.sarif ./...
+          gosec -conf .gosec.json ./...
 
       - name: Upload SARIF to GitHub Security
         uses: github/codeql-action/upload-sarif@v3
