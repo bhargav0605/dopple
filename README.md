@@ -6,12 +6,12 @@ Fast CLI tool to find and remove duplicate files using SHA-256 hashing. Works ev
 
 ### Option 1: Download Pre-built Binary (Recommended)
 
-Download the latest release for your platform from [releases](https://github.com/yourusername/doppel/releases).
+Download the latest release for your platform from [releases](https://github.com/bhargav0605/dopple/releases).
 
 **Linux/macOS:**
 ```bash
 # Download the binary for your platform
-wget https://github.com/yourusername/doppel/releases/download/v1.0.0/doppel-linux-amd64
+wget https://github.com/bhargav0605/dopple/releases/download/v0.1.0/doppel-linux-amd64
 # or for macOS: doppel-darwin-amd64 / doppel-darwin-arm64
 
 # Rename and make executable
@@ -33,14 +33,14 @@ chmod +x doppel
 ### Option 2: Install with Go
 
 ```bash
-go install github.com/yourusername/doppel@latest
+go install github.com/bhargav0605/dopple@latest
 ```
 
 ### Option 3: Build from Source
 
 ```bash
-git clone https://github.com/yourusername/doppel.git
-cd doppel
+git clone https://github.com/bhargav0605/dopple.git
+cd dopple
 go build -o doppel
 
 # Install to system (optional)
