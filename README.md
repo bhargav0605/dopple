@@ -72,6 +72,27 @@ doppel --min-size 1048576 --extensions .jpg,.png /photos
 - `--min-size` - Ignore files smaller than size in bytes
 - `--extensions` - Filter by file extensions (comma-separated)
 
+## Uninstall
+
+**Linux/macOS:**
+```bash
+# If installed via install.sh
+rm ~/.local/bin/doppel
+
+# If installed via go install
+rm $(go env GOPATH)/bin/doppel
+```
+
+**Windows:**
+```powershell
+# If installed via install.ps1
+Remove-Item "$env:LOCALAPPDATA\doppel\doppel.exe"
+# Optional: Remove from PATH manually via System Environment Variables
+
+# If installed via go install
+Remove-Item "$(go env GOPATH)\bin\doppel.exe"
+```
+
 ## How it works
 
 1. Scans directory recursively
