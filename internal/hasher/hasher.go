@@ -71,6 +71,7 @@ func groupBySize(files []scanner.FileInfo) map[int64][]scanner.FileInfo {
 }
 
 func hashFile(path string) (string, error) {
+	// #nosec G304 - path comes from filesystem scan, not user input
 	file, err := os.Open(path)
 	if err != nil {
 		return "", err

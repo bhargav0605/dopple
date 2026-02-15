@@ -119,17 +119,17 @@ func displayCompareDuplicates(groups []detector.DuplicateGroup, dir1, dir2 strin
 			filename := filepath.Base(file.Path)
 			location := filepath.Dir(file.Path)
 			sizeMB := fmt.Sprintf("%.2f", float64(file.Size)/(1024*1024))
-			table.Append("[1]", filename, location, sizeMB)
+			_ = table.Append("[1]", filename, location, sizeMB)
 		}
 
 		for _, file := range dir2Files {
 			filename := filepath.Base(file.Path)
 			location := filepath.Dir(file.Path)
 			sizeMB := fmt.Sprintf("%.2f", float64(file.Size)/(1024*1024))
-			table.Append("[2]", filename, location, sizeMB)
+			_ = table.Append("[2]", filename, location, sizeMB)
 		}
 
-		table.Render()
+		_ = table.Render()
 
 		if dryRun {
 			continue

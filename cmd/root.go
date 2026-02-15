@@ -184,7 +184,7 @@ func displayGroupTable(files []scanner.FileInfo) {
 		filename := filepath.Base(file.Path)
 		location := filepath.Dir(file.Path)
 		sizeMB := fmt.Sprintf("%.2f", float64(file.Size)/(1024*1024))
-		table.Append(
+		_ = table.Append(
 			fmt.Sprintf("[%d]", i+1),
 			filename,
 			location,
@@ -192,11 +192,11 @@ func displayGroupTable(files []scanner.FileInfo) {
 		)
 	}
 
-	table.Render()
+	_ = table.Render()
 }
 
 func displayAllThenDelete(groups []detector.DuplicateGroup) {
-	fmt.Println("=== All Duplicate Groups ===\n")
+	fmt.Println("=== All Duplicate Groups ===")
 
 	for i, group := range groups {
 		similarityTag := ""
@@ -216,10 +216,10 @@ func displayAllThenDelete(groups []detector.DuplicateGroup) {
 			filename := filepath.Base(file.Path)
 			location := filepath.Dir(file.Path)
 			sizeMB := fmt.Sprintf("%.2f", float64(file.Size)/(1024*1024))
-			table.Append(action, filename, location, sizeMB)
+			_ = table.Append(action, filename, location, sizeMB)
 		}
 
-		table.Render()
+		_ = table.Render()
 		fmt.Println()
 	}
 

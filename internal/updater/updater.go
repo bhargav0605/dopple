@@ -40,7 +40,7 @@ func getCacheDir() (string, error) {
 		return "", err
 	}
 	cacheDir := filepath.Join(home, ".cache", "doppel")
-	if err := os.MkdirAll(cacheDir, 0755); err != nil {
+	if err := os.MkdirAll(cacheDir, 0750); err != nil {
 		return "", err
 	}
 	return cacheDir, nil
@@ -53,6 +53,7 @@ func loadCache() (*VersionCache, error) {
 	}
 
 	cachePath := filepath.Join(cacheDir, cacheFile)
+	// #nosec G304 - cachePath is constructed from user home dir and constant filename
 	data, err := os.ReadFile(cachePath)
 	if err != nil {
 		return nil, err
@@ -78,7 +79,7 @@ func saveCache(cache *VersionCache) error {
 		return err
 	}
 
-	return os.WriteFile(cachePath, data, 0644)
+	return os.WriteFile(cachePath, data, 0600)
 }
 
 func CheckForUpdates(currentVersion string, forceCheck bool) (string, bool, error) {
@@ -119,7 +120,7 @@ func CheckForUpdates(currentVersion string, forceCheck bool) (string, bool, erro
 		LatestVersion:  latestVersion,
 		CurrentVersion: currentVersion,
 	}
-	saveCache(cache)
+	_ = saveCache(cache)
 
 	updateAvailable := latestVersion != currentVersion
 	return latestVersion, updateAvailable, nil
@@ -175,22 +176,25 @@ func DownloadAndInstall(currentVersion string) error {
 		return fmt.Errorf("failed to backup current binary: %w", err)
 	}
 
+	// #nosec G302 - executable binary requires 0755 permissions to be runnable
 	newFile, err := os.OpenFile(execPath, os.O_CREATE|os.O_WRONLY|os.O_TRUNC, 0755)
 	if err != nil {
-		os.Rename(backupPath, execPath)
+		_ = os.Rename(backupPath, execPath)
 		return fmt.Errorf("failed to create new binary: %w", err)
 	}
 
 	_, err = io.Copy(newFile, downloadResp.Body)
-	newFile.Close()
+	if closeErr := newFile.Close(); closeErr != nil && err == nil {
+		err = closeErr
+	}
 
 	if err != nil {
-		os.Remove(execPath)
-		os.Rename(backupPath, execPath)
+		_ = os.Remove(execPath)
+		_ = os.Rename(backupPath, execPath)
 		return fmt.Errorf("failed to write new binary: %w", err)
 	}
 
-	os.Remove(backupPath)
+	_ = os.Remove(backupPath)
 
 	fmt.Printf("Successfully updated to %s\n", release.TagName)
 	return nil

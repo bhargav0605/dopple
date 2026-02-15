@@ -29,6 +29,7 @@ func isImage(filename string) bool {
 }
 
 func perceptualHashImage(path string) (*goimagehash.ImageHash, error) {
+	// #nosec G304 - path comes from filesystem scan, not user input
 	file, err := os.Open(path)
 	if err != nil {
 		return nil, err
