@@ -18,7 +18,7 @@ Download the latest release for your platform from [releases](https://github.com
 **Linux/macOS:**
 ```bash
 # Download the binary for your platform
-wget https://github.com/bhargav0605/dopple/releases/download/v0.1.0/doppel-linux-amd64
+wget https://github.com/bhargav0605/dopple/releases/download/v0.1.1/doppel-linux-amd64
 # or for macOS: doppel-darwin-amd64 / doppel-darwin-arm64
 
 # Rename and make executable
